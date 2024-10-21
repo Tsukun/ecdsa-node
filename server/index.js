@@ -23,13 +23,8 @@ app.get("/balance/:address", (req, res) => {
 app.post("/send", (req, res) => {
   const { sender, recipient, amount, hash, signature } = req.body;
 
-  console.log(hash)
-
-
   signature.r = BigInt(signature.r)
   signature.s = BigInt(signature.s)
-
-  console.log(signature)
   
   if(!utils.verify(signature, hash, sender)){
     return res.status(500).send('You are not sender wallet owner !')

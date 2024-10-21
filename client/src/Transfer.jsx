@@ -1,7 +1,6 @@
 import { useState } from "react";
 import server from "./server";
-import { signMessage } from "./utils/signMessage";
-import { hashMessage } from "./utils/hashMessage";
+import { hashMessage, signMessage } from "./utils/cryptography";
 import { toHex } from "ethereum-cryptography/utils";
 
 function Transfer({ address, setBalance }) {
@@ -31,7 +30,6 @@ function Transfer({ address, setBalance }) {
     const signature = await signMessage(JSON.stringify(transferData), privateKey);
     signature.r = signature.r.toString();
     signature.s = signature.s.toString();
-    console.log(signature)
   
     try {
       const {
@@ -46,7 +44,7 @@ function Transfer({ address, setBalance }) {
       });
       setBalance(balance);
     } catch (ex) {
-      alert(ex.response.data);
+      alert(ex.response.data.message);
     }
   }
 

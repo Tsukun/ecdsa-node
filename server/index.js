@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const utils = require("./utils");
+const utils = require("./utils/cryptography");
 
 const port = 3042;
 
@@ -27,7 +27,7 @@ app.post("/send", (req, res) => {
   signature.s = BigInt(signature.s)
   
   if(!utils.verify(signature, hash, sender)){
-    return res.status(500).send('You are not sender wallet owner !')
+    return res.status(500).send({message: 'You are not sender wallet owner !'})
   }
 
   setInitialBalance(sender);
